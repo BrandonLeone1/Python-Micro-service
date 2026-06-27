@@ -6,8 +6,12 @@ import csv
 from openai import OpenAI
 from typing import Optional
 import psycopg
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 app = FastAPI()
-openai_client = OpenAI(api_key="")
+openai_client = OpenAI(api_key=os.getenv("OPENAI_KEY"))
 
 class openAIAnswer(BaseModel):
     metric_date: str
@@ -24,11 +28,11 @@ def root():
 
 def connectDB():
     conn = psycopg.connect(
-        dbname='',
-        user='',
-        password='',
-        host='',
-        port=''
+        dbname=os.getenv("DB_NAME"),
+        user=os.getenv("DB_USER"),
+        password=os.getenv("DB_PASSWORD"),
+        host=os.getenv("DB_HOST"),
+        port=os.getenv("DB_PORT")
     )
     try:
         yield conn
