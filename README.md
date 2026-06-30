@@ -21,4 +21,4 @@ An end-to-end data ingestion pipeline and business intelligence solution designe
 
 ## Dashboard Preview
 
-![Executive Performance Interface](Multi-Channel Marketing Dashboard (1).png)
+![Executive Performance Interface](dashboard-preview.png)
