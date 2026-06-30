@@ -4,7 +4,7 @@ import pandas as pd
 import io
 import csv
 from openai import OpenAI
-from typing import Optional
+from typing import Optional, Literal
 import psycopg
 from dotenv import load_dotenv
 import os
@@ -20,7 +20,7 @@ class openAIAnswer(BaseModel):
     conversions: str
     ad_spend: str
     revenue: Optional[str] = None
-    platform: str
+    platform: Literal["Google Ads", "Meta Ads", "TikTok Ads"]
 
 @app.get("/")
 def root():
