@@ -83,7 +83,7 @@ async def handle_upload(campaign_id: int, conn = Depends(connectDB), file: Uploa
             messages=[
                 {
                     "role": "system", 
-                    "content": "You are a data engineering assistant. Your job is to analyze a list of raw CSV header columns from a marketing platform (Meta Ads, Google Ads, or TikTok Ads) and map them to our internal standardized schema fields. Identify the platform based on the column names provided. Then return the names of the columns that map to ours. Follow the output model. **HINT**: if it mentions 2-second video views or 6-second video views, it is tiktok ads. ONLY RETURN TIKTOK ADS IF THESE COLUMNS EXIST. **HINT**: ANYTHING WITH 'Reporting Start' or 'Reporting End' is META. **HINT**: GOOGLE ADS WILL HAVE COLUMNS LIKE 'conversion value' OR 'Conv. value'"
+                    "content": "You are a data engineering assistant. Your job is to analyze a list of raw CSV header columns from a marketing platform (Meta Ads, Google Ads, or TikTok Ads) and map them to our internal standardized schema fields. Identify the platform based on the column names provided. Then return the names of the columns that map to ours. Follow the output model. **HINT**: if it mentions 2-second video views or 6-second video views, it is tiktok ads. ONLY RETURN TIKTOK ADS IF THESE COLUMNS EXIST. **HINT**: ANYTHING WITH 'Reporting Start' or 'Reporting End' is META. **HINT**: GOOGLE ADS WILL HAVE COLUMNS LIKE 'conversion value' OR 'Conv. value'. **Standardize your response to: 1) Google Ads 2) Meta Ads 3) TikTok Ads**"
                 },
                 {
                     "role": "user", 
@@ -126,4 +126,5 @@ async def handle_upload(campaign_id: int, conn = Depends(connectDB), file: Uploa
     except Exception:
         conn.rollback()
         raise HTTPException(500, "Failed trying to insert records to DB")
+    clean_df.to_csv(f"{mapping.platform}-data.csv", index=False)
     return mapping
